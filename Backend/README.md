@@ -1,37 +1,56 @@
-# Backend Project
-
-This is a simple backend project created using Express.js.
+# PetNeeds Backend
 
 ## Description
+This is the backend for the PetNeeds application. It is built using Node.js, Express, and MongoDB.
 
-This project is created by "Sachin Kumar". It is a basic Express.js application that listens on port 8080 and responds with "Hello World!" when accessed at the root URL.
+## Setup
 
-## Installation
+### Prerequisites
+- Node.js
+- MongoDB
 
-To install the dependencies, run:
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   ```
+2. Navigate to the backend directory:
+   ```bash
+   cd PetNeeds/Backend
+   ```
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
 
-```bash
-npm install
-```
+### Configuration
+1. Create a `.env` file in the `Backend` directory and add the following environment variables:
+   ```properties
+   PORT=4000
+   DB_CONNECT=mongodb://0.0.0.0/PetNeeds
+   JWT_SECRET=your_jwt_secret
+   ```
 
-## Usage
+### Running the Application
+1. Start the server:
+   ```bash
+   node server.js
+   ```
+2. The server will be running on `http://localhost:4000`.
 
-To start the application, run:
+## API Endpoints
 
-```bash
-node app.js
+### User Routes
+- `POST /users/register` - Register a new user
+- `POST /users/login` - Login a user
 
-```
+## Models
 
-The application will be running at `http://localhost:8080`.
-
-## Project Structure
-
-- `app.js`: The main application file.
-- `package.json`: Contains the project metadata and dependencies.
-- `package-lock.json`: Contains the exact versions of dependencies installed.
-- `node_modules/`: Directory containing the installed dependencies.
+### User Model
+- `fullname.firstName` - First name of the user (required, minimum 3 characters)
+- `fullname.lastName` - Last name of the user (required, minimum 3 characters)
+- `email` - Email of the user (required, unique, minimum 3 characters)
+- `password` - Password of the user (required, not selected by default)
 
 ## License
-
-This project is licensed under the ISC License.
+This project is licensed under the MIT License.
