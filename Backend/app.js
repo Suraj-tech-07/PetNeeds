@@ -1,13 +1,18 @@
 const express = require('express');
+const dotenv = require('dotenv');
+dotenv.config();
+const cors = require('cors');
 const app = express();
+const connectDB = require('./db/db');
 
-const port = 8080;
+connectDB(); // call Database connection function
+app.use(cors());
+
+const userRoutes = require('./routes/user.routes');
+app.use('/users', userRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-});
-
+module.exports = app;
