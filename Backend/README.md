@@ -54,3 +54,121 @@ This is the backend for the PetNeeds application. It is built using Node.js, Exp
 
 ## License
 This project is licensed under the MIT License.
+
+
+### User Registration
+
+- **Endpoint:** `/users/register`
+- **Method:** `POST`
+- **Request Body:**
+    ```json
+    {
+        "fullname": {
+            "firstname": "John",
+            "lastname": "Doe"
+        },
+        "email": "john.doe@example.com",
+        "password": "yourpassword"
+    }
+    ```
+
+     **Response:**
+    ```json
+    {
+        "token": "jwt_token",
+        "user": {
+            "_id": "user_id",
+            "fullname": {
+                "firstname": "John",
+                "lastname": "Doe"
+            },
+            "email": "john.doe@example.com"
+        }
+    }
+    ```
+
+## Middleware
+
+### Authentication Middleware
+
+ **File:** `middlewares/user.middleware.js`
+- **Function:** `authUser`
+- **Description:** This middleware checks if the user is authenticated by verifying the JWT token and checking if it is blacklisted.
+
+## Models
+
+### User Model
+
+- **File:** `moduls/user.model.js`
+- **Schema:**
+    ```javascript
+    const userSchema = new mongoose.Schema({
+        fullname: {
+            firstName: {
+                type: String,
+                required: true,
+                minlength: [3, 'First name must be at least 3 characters']
+            },
+             lastName: {
+                type: String,
+                required: true,
+                minlength: [3, 'Last name must be at least 3 characters']
+            }
+        },
+        email: {
+            type: String,
+            required: true,
+            unique: true,
+            minlength: [3, 'Email must be at least 3 characters']
+        },
+         password: {
+            type: String,
+            required: true,
+            select: false
+        }
+    });
+    ```
+
+    ### Blacklist Token Model
+
+- **File:** `moduls/blacklistToken.model.js`
+- **Schema:**
+    ```javascript
+    const blackListTokenSchema = new mongoose.Schema({
+        token: { 
+            type: String, 
+            required: true, 
+            unique: true 
+        },
+        createdAt : { 
+            type: Date, 
+            default: Date.now,
+            expires: 86400
+        }
+    });
+    ```
+
+## Services
+
+### User Service
+
+**File:** `services/user.service.js`
+- **Function:** `createUser`
+- **Description:** This function creates a new user in the database after validating the required fields.
+
+## Controllers
+
+### User Controller
+
+- **File:** `controller/user.controller.js`
+- **Function:** `registerUser`
+- **Description:** This function handles user registration, including validation, password hashing, and token generation.
+
+## Routes
+
+### User Routes
+
+- **File:** `routes/user.routes.js`
+- **Endpoint:** `/users/register`
+- **Method:** `POST`
+**Description:** This route handles user registration with validation using `express-validator`.
